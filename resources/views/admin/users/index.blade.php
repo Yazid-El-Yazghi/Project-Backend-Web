@@ -11,8 +11,11 @@
                         </div>
                     @endif
 
-                    <div class="flex justify-end mb-4">
-                        <a href="{{ route('admin.users.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <div style="display: flex; justify-content: flex-start; margin-bottom: 1rem;">
+                        <a href="{{ route('admin.users.create') }}"
+                           style="background-color: #3b82f6; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                           onmouseover="this.style.backgroundColor='#2563eb'"
+                           onmouseout="this.style.backgroundColor='#3b82f6'">
                             Create User
                         </a>
                     </div>
