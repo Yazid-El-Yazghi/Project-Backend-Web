@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\AdminRegistrationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,7 +60,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin routes - middleware wordt hier toegepast op de groep
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('news', AdminNewsController::class);
     Route::resource('faq-categories', FaqCategoryController::class);

@@ -10,13 +10,9 @@ class AdminRegistrationController extends Controller
 {
     public function __construct()
     {
-        // Simple check in constructor instead of middleware
-        $this->middleware(function ($request, $next) {
-            if (!auth()->check() || !auth()->user()->isAdmin()) {
-                abort(403, 'Access denied. Admin privileges required.');
-            }
-            return $next($request);
-        });
+        // Apply middleware to ensure only admins can access this controller
+        $this->middleware('auth');
+        $this->middleware('admin');
     }
 
     public function index()
