@@ -47,6 +47,16 @@ class User extends Authenticatable
         ];
     }
 
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'created_by');
+    }
+
     /**
      * Check if user is admin
      */
@@ -61,5 +71,13 @@ class User extends Authenticatable
     public function isUser()
     {
         return $this->role === 'user';
+    }
+
+    /**
+     * Get or create profile for user
+     */
+    public function getOrCreateProfile()
+    {
+        return $this->profile ?: $this->profile()->create([]);
     }
 }
