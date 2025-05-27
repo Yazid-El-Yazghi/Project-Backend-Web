@@ -1,84 +1,60 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Create New User') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-<div style="padding: 3rem 0;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
-        <div style="background: white; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden;">
-            <div style="padding: 1.5rem;">
-                <h2 style="font-size: 1.25rem; font-weight: 600; color: #374151; margin-bottom: 1.5rem;">
-                    Create User
-                </h2>
-                <form method="POST" action="{{ route('admin.users.store') }}">
-                    @csrf
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <form method="POST" action="{{ route('admin.users.store') }}">
+                        @csrf
 
-                    <!-- Name -->
-                    <div style="margin-bottom: 1rem;">
-                        <label for="name" style="display: block; font-weight: 500; font-size: 0.875rem; color: #374151; margin-bottom: 0.25rem;">Name</label>
-                        <input id="name" 
-                               style="display: block; margin-top: 0.25rem; width: 100%; border-radius: 0.375rem; border: 1px solid #d1d5db; padding: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" 
-                               type="text" 
-                               name="name" 
-                               value="{{ old('name') }}" 
-                               required 
-                               autofocus />
-                        @error('name')
-                            <p style="color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Name -->
+                        <div>
+                            <x-input-label for="name" :value="__('Name')" />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
 
-                    <!-- Email Address -->
-                    <div style="margin-bottom: 1rem;">
-                        <label for="email" style="display: block; font-weight: 500; font-size: 0.875rem; color: #374151; margin-bottom: 0.25rem;">Email</label>
-                        <input id="email" 
-                               style="display: block; margin-top: 0.25rem; width: 100%; border-radius: 0.375rem; border: 1px solid #d1d5db; padding: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" 
-                               type="email" 
-                               name="email" 
-                               value="{{ old('email') }}" 
-                               required />
-                        @error('email')
-                            <p style="color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Email Address -->
+                        <div class="mt-4">
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
 
-                    <!-- Password -->
-                    <div style="margin-bottom: 1rem;">
-                        <label for="password" style="display: block; font-weight: 500; font-size: 0.875rem; color: #374151; margin-bottom: 0.25rem;">Password</label>
-                        <input id="password" 
-                               style="display: block; margin-top: 0.25rem; width: 100%; border-radius: 0.375rem; border: 1px solid #d1d5db; padding: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);" 
-                               type="password" 
-                               name="password" 
-                               required />
-                        @error('password')
-                            <p style="color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Password -->
+                        <div class="mt-4">
+                            <x-input-label for="password" :value="__('Password')" />
+                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        </div>
 
-                    <!-- Role -->
-                    <div style="margin-bottom: 1rem;">
-                        <label for="role" style="display: block; font-weight: 500; font-size: 0.875rem; color: #374151; margin-bottom: 0.25rem;">Role</label>
-                        <select id="role" 
-                                name="role" 
-                                style="display: block; margin-top: 0.25rem; width: 100%; border-radius: 0.375rem; border: 1px solid #d1d5db; padding: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        </select>
-                        @error('role')
-                            <p style="color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem;">{{ $message }}</p>
-                        @enderror
-                    </div>
+                        <!-- Role -->
+                        <div class="mt-4">
+                            <x-input-label for="role" :value="__('Role')" />
+                            <select id="role" name="role" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                                <option value="">{{ __('Select Role') }}</option>
+                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                        </div>
 
-                    <!-- Submit Button - VISIBLE AND ON THE LEFT -->
-                    <div style="margin-top: 1.5rem; text-align: left;">
-                        <button type="submit" 
-                                style="background-color: #3b82f6; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
-                                onmouseover="this.style.backgroundColor='#2563eb'"
-                                onmouseout="this.style.backgroundColor='#3b82f6'">
-                            CREATE USER
-                        </button>
-                    </div>
-                </form>
+                        <div class="flex items-center justify-end mt-4">
+                            <a href="{{ route('admin.users.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-400 dark:hover:bg-gray-500 focus:bg-gray-400 dark:focus:bg-gray-500 active:bg-gray-500 dark:active:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 mr-3">
+                                {{ __('Cancel') }}
+                            </a>
+                            <x-primary-button>
+                                {{ __('Create User') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app-layout>

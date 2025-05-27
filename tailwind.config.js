@@ -21,5 +21,5 @@ export default {
     },
 
     plugins: [require('@tailwindcss/forms'), forms],
-    darkMode: 'class', // Enable dark mode support
+    darkMode: 'class',
 };

@@ -53,6 +53,11 @@ class UserController extends Controller
             'role' => ['required', 'in:user,admin'],
         ]);
 
+        // Prevent admin from demoting themselves
+        if ($user->id === auth()->id() && $request->role !== 'admin') {
+            return back()->withErrors(['role' => 'You cannot change your own admin role.']);
+        }
+
         $data = [
             'name' => $request->name,
             'email' => $request->email,
