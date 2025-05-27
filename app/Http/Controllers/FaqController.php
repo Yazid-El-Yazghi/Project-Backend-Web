@@ -9,10 +9,11 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $categories = FaqCategory::with('publishedFaqs')
+        // Wijzig $categories naar $faqCategories om consistent te zijn met de view
+        $faqCategories = FaqCategory::with('publishedFaqs')
                                 ->orderBy('sort_order')
                                 ->get();
         
-        return view('faq.index', compact('categories'));
+        return view('faq.index', compact('faqCategories'));
     }
 }

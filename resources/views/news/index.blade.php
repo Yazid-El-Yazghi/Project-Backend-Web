@@ -16,17 +16,19 @@
                             @endif
                             <div class="p-6">
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                                    {{ $article->title }}
+                                    <a href="{{ route('news.show', $article) }}" class="hover:text-blue-600 dark:hover:text-blue-400">
+                                        {{ $article->title }}
+                                    </a>
                                 </h3>
                                 <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
                                     {{ Str::limit(strip_tags($article->content), 150) }}
                                 </p>
-                                <div class="flex justify-between items-center">
+                                <div class="flex justify-between items-center mb-2">
                                     <span class="text-xs text-gray-500 dark:text-gray-400">
-                                        {{ $article->publication_date->format('d M Y') }}
+                                        {{ $article->publication_date->format('d F Y') }}
                                     </span>
                                     <a href="{{ route('news.show', $article) }}" 
-                                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">
+                                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded text-sm">
                                         Lees Meer
                                     </a>
                                 </div>
