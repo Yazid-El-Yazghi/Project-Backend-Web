@@ -23,7 +23,7 @@
                         @if($category->publishedFaqs->count() > 0)
                             <div class="space-y-4">
                                 @foreach($category->publishedFaqs as $faq)
-                                    <div x-data="{ open: false }" class="border border-gray-200 dark:border-gray-700 rounded-lg">
+                                    <div id="faq-{{ $faq->id }}" x-data="{ open: false }" class="border border-gray-200 dark:border-gray-700 rounded-lg">
                                         <button @click="open = !open" class="w-full text-left p-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-150">
                                             <div class="flex justify-between items-center">
                                                 <h4 class="font-medium text-gray-900 dark:text-gray-100">

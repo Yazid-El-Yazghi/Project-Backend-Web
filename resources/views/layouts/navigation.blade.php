@@ -29,71 +29,53 @@
                         {{ __('Contact') }}
                     </x-nav-link>
 
-                    @if(auth()->user()->isAdmin())
-                        <!-- Admin Dropdown -->
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <x-dropdown align="right" width="48">
-                                <x-slot name="trigger">
-                                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div>{{ __('Admin') }}</div>
-                                        <div class="ms-1">
-                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                    </button>
-                                </x-slot>
+                    @auth
+                        @if(auth()->user()->isAdmin())
+                            <!-- Admin Dropdown -->
+                            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                                <x-dropdown align="right" width="48">
+                                    <x-slot name="trigger">
+                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                            <div>{{ __('Admin') }}</div>
+                                            <div class="ms-1">
+                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </x-slot>
 
-                                <x-slot name="content">
-                                    <x-dropdown-link :href="route('admin.users.index')">
-                                        {{ __('User Management') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('admin.news.index')">
-                                        {{ __('News Management') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('admin.faq-categories.index')">
-                                        {{ __('FAQ Categories') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('admin.faqs.index')">
-                                        {{ __('FAQ Management') }}
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('admin.contact.index')">
-                                        {{ __('Contact Messages') }}
-                                    </x-dropdown-link>
-                                </x-slot>
-                            </x-dropdown>
-                        </div>
-                    @endif
+                                    <x-slot name="content">
+                                        <x-dropdown-link :href="route('admin.users.index')">
+                                            {{ __('User Management') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('admin.news.index')">
+                                            {{ __('News Management') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('admin.faq-categories.index')">
+                                            {{ __('FAQ Categories') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('admin.faqs.index')">
+                                            {{ __('FAQ Management') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('admin.contact.index')">
+                                            {{ __('Contact Messages') }}
+                                        </x-dropdown-link>
+                                    </x-slot>
+                                </x-dropdown>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
-            <!-- Dark Mode Toggle and Settings -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
-                <!-- Dark Mode Toggle Button -->
-                <button 
-                    @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode)"
-                    class="p-2 rounded-md text-gray-400 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-700 transition duration-150 ease-in-out"
-                    title="Toggle Dark Mode"
-                >
-                    <!-- Sun Icon (visible in dark mode) -->
-                    <svg x-show="darkMode" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <!-- Moon Icon (visible in light mode) -->
-                    <svg x-show="!darkMode" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
-
-                <!-- Settings Dropdown -->
-                <div class="ms-3 relative">
+            <!-- Settings Dropdown -->
+            @auth
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
-                                @if(auth()->user()->isAdmin())
-                                    <span class="ml-1 px-2 py-1 text-xs bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded-full">Admin</span>
-                                @endif
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -104,13 +86,6 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            @if(auth()->user()->isAdmin())
-                                <x-dropdown-link :href="route('admin.users.index')">
-                                    {{ __('User Management') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-100 dark:border-gray-600"></div>
-                            @endif
-
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -128,7 +103,12 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
-            </div>
+            @else
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <a href="{{ route('login') }}" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mr-4">Login</a>
+                    <a href="{{ route('register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Register</a>
+                </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -148,70 +128,33 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-
-            @if(auth()->user()->isAdmin())
-                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                    {{ __('User Management') }}
-                </x-responsive-nav-link>
-            @endif
-        </div>
-
-        <!-- Dark Mode Toggle for Mobile -->
-        <div class="pt-2 pb-3 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <button 
-                    @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode)"
-                    class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition duration-150 ease-in-out"
-                >
-                    <span x-show="darkMode" class="flex items-center">
-                        <svg class="h-5 w-5 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        Light Mode
-                    </span>
-                    <span x-show="!darkMode" class="flex items-center">
-                        <svg class="h-5 w-5 me-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                        </svg>
-                        Dark Mode
-                    </span>
-                </button>
-            </div>
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200 flex items-center">
-                    {{ Auth::user()->name }}
-                    @if(auth()->user()->isAdmin())
-                        <span class="ml-2 px-2 py-1 text-xs bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded-full">Admin</span>
-                    @endif
+        @auth
+            <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
 
-            <div class="mt-3 space-y-1">
-                @if(auth()->user()->isAdmin())
-                    <x-responsive-nav-link :href="route('admin.users.index')">
-                        {{ __('User Management') }}
+                <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('profile.edit')">
+                        {{ __('Profile') }}
                     </x-responsive-nav-link>
-                @endif
 
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+                        <x-responsive-nav-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endauth
     </div>
 </nav>
