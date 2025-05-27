@@ -12,6 +12,24 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3 class="text-lg font-semibold mb-2">Welkom, {{ auth()->user()->display_name }}!</h3>
                     <p>Je bent succesvol ingelogd op het platform.</p>
+                    
+                    <!-- Add Inschrijvingen Section for logged in users -->
+                    <div class="mt-4 p-4 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800">
+                        <h4 class="font-semibold text-green-900 dark:text-green-100 mb-2">
+                            ⚽ Schrijf je kind in bij ACJM!
+                        </h4>
+                        <p class="text-green-800 dark:text-green-200 text-sm mb-3">
+                            Als lid kun je gemakkelijk je kind inschrijven voor onze jeugdteams. 
+                            Training op dinsdagavond en zaterdagochtend.
+                        </p>
+                        <a href="{{ route('registrations.create') }}" 
+                           class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-700 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                            </svg>
+                            Kind Inschrijven
+                        </a>
+                    </div>
                 </div>
             </div>
 

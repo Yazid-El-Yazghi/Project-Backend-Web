@@ -22,6 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'birth_date',
+        'phone',
+        'avatar',
+        'bio'
     ];
 
     /**
@@ -44,6 +48,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date'
         ];
     }
 
@@ -86,8 +91,6 @@ class User extends Authenticatable
      */
     public function getDisplayNameAttribute()
     {
-        return $this->profile && $this->profile->username 
-            ? $this->profile->username 
-            : $this->name;
+        return $this->name;
     }
 }

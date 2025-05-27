@@ -35,6 +35,11 @@
                         {{ __('Contact') }}
                     </x-nav-link>
 
+                    <!-- Add Inschrijvingen Link -->
+                    <x-nav-link :href="route('registrations.create')" :active="request()->routeIs('registrations.*')">
+                        {{ __('Inschrijven') }}
+                    </x-nav-link>
+
                     @auth
                         @if(auth()->user()->isAdmin())
                             <!-- Admin Dropdown -->
@@ -66,6 +71,9 @@
                                         </x-dropdown-link>
                                         <x-dropdown-link :href="route('admin.contact.index')">
                                             {{ __('Contactberichten') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link :href="route('admin.registrations.index')">
+                                            {{ __('Inschrijvingen') }}
                                         </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
@@ -199,6 +207,10 @@
                 {{ __('Contact') }}
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('registrations.create')" :active="request()->routeIs('registrations.*')">
+                {{ __('Inschrijven') }}
+            </x-responsive-nav-link>
+
             @auth
                 @if(auth()->user()->isAdmin())
                     <div class="border-t border-gray-200 dark:border-gray-600 pt-4">
@@ -217,6 +229,9 @@
                         </x-responsive-nav-link>
                         <x-responsive-nav-link :href="route('admin.contact.index')">
                             {{ __('Contactberichten') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('admin.registrations.index')">
+                            {{ __('Inschrijvingen') }}
                         </x-responsive-nav-link>
                     </div>
                 @endif
