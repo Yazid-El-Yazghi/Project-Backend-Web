@@ -14,10 +14,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $users = collect();
+    
+    if (auth()->check()) {
+        if (auth()->user()->isAdmin()) {
+            // Admin ziet alle gebruikers
+            $users = \App\Models\User::all();
+        } else {
+            // Gewone gebruiker ziet alleen andere gewone gebruikers (geen admins)
+            $users = \App\Models\User::where('role', 'user')->get();
+        }
+    }
+    
+    return view('dashboard', compact('users'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Public routes
