@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('username')->nullable();
             $table->date('birthday')->nullable();
             $table->text('about_me')->nullable();
-            $table->string('profile_image')->nullable();
             $table->timestamps();
         });
     }

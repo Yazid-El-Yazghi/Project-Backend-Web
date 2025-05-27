@@ -80,4 +80,14 @@ class User extends Authenticatable
     {
         return $this->profile ?: $this->profile()->create([]);
     }
+
+    /**
+     * Get the display name for the user (username or name)
+     */
+    public function getDisplayNameAttribute()
+    {
+        return $this->profile && $this->profile->username 
+            ? $this->profile->username 
+            : $this->name;
+    }
 }

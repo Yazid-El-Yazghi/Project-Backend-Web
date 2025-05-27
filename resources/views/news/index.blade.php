@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('News') }}
+            {{ __('Nieuws') }}
         </h2>
     </x-slot>
 
@@ -23,15 +23,18 @@
                                 </p>
                                 <div class="flex justify-between items-center">
                                     <span class="text-xs text-gray-500 dark:text-gray-400">
-                                        {{ $article->publication_date->format('M d, Y') }}
+                                        {{ $article->publication_date->format('d M Y') }}
                                     </span>
                                     <a href="{{ route('news.show', $article) }}" 
                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm">
-                                        Read More
+                                        Lees Meer
                                     </a>
                                 </div>
                                 <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                                    By {{ $article->author->name }}
+                                    Door <a href="{{ route('profiles.show', $article->author) }}" 
+                                           class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                        {{ $article->author->display_name }}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +48,7 @@
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-center">
                         <p class="text-gray-500 dark:text-gray-400">
-                            No news articles available at the moment.
+                            Er zijn momenteel geen nieuwsartikelen beschikbaar.
                         </p>
                     </div>
                 </div>

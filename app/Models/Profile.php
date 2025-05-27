@@ -13,21 +13,15 @@ class Profile extends Model
         'user_id',
         'username',
         'birthday',
-        'about_me',
-        'profile_image'
+        'about_me'
     ];
 
     protected $casts = [
-        'birthday' => 'date'
+        'birthday' => 'date',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getDisplayNameAttribute()
-    {
-        return $this->username ?: $this->user->name;
     }
 }

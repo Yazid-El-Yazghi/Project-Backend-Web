@@ -19,9 +19,12 @@
                         </h1>
                         
                         <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
-                            <span>Published on {{ $news->publication_date->format('F d, Y') }}</span>
+                            <span>Gepubliceerd op {{ $news->publication_date->format('d F Y') }}</span>
                             <span class="mx-2">•</span>
-                            <span>By {{ $news->author->name }}</span>
+                            <span>Door <a href="{{ route('profiles.show', $news->author) }}" 
+                                         class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                {{ $news->author->display_name }}
+                            </a></span>
                         </div>
                     </div>
 
@@ -34,7 +37,7 @@
                     <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                         <a href="{{ route('news.index') }}" 
                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                            ← Back to News
+                            ← Terug naar Nieuws
                         </a>
                     </div>
                 </div>

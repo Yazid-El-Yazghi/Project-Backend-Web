@@ -18,7 +18,7 @@
 
                     <!-- Public Links -->
                     <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.*')">
-                        {{ __('News') }}
+                        {{ __('Nieuws') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
@@ -36,7 +36,7 @@
                                 <x-dropdown align="right" width="48">
                                     <x-slot name="trigger">
                                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                            <div>{{ __('Admin') }}</div>
+                                            <div>{{ __('Beheer') }}</div>
                                             <div class="ms-1">
                                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -47,19 +47,19 @@
 
                                     <x-slot name="content">
                                         <x-dropdown-link :href="route('admin.users.index')">
-                                            {{ __('User Management') }}
+                                            {{ __('Gebruikersbeheer') }}
                                         </x-dropdown-link>
                                         <x-dropdown-link :href="route('admin.news.index')">
-                                            {{ __('News Management') }}
+                                            {{ __('Nieuwsbeheer') }}
                                         </x-dropdown-link>
                                         <x-dropdown-link :href="route('admin.faq-categories.index')">
-                                            {{ __('FAQ Categories') }}
+                                            {{ __('FAQ Categorieën') }}
                                         </x-dropdown-link>
                                         <x-dropdown-link :href="route('admin.faqs.index')">
-                                            {{ __('FAQ Management') }}
+                                            {{ __('FAQ Beheer') }}
                                         </x-dropdown-link>
                                         <x-dropdown-link :href="route('admin.contact.index')">
-                                            {{ __('Contact Messages') }}
+                                            {{ __('Contactberichten') }}
                                         </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
@@ -69,9 +69,42 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
-            @auth
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <!-- Dark Mode Toggle -->
+                <button x-data="{ 
+                    darkMode: localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+                    toggle() {
+                        this.darkMode = !this.darkMode;
+                        localStorage.setItem('darkMode', this.darkMode);
+                        if (this.darkMode) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    }
+                }" 
+                x-init="
+                    if (darkMode) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                " 
+                @click="toggle()" 
+                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 mr-4">
+                    <!-- Sun Icon (Light Mode) -->
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    
+                    <!-- Moon Icon (Dark Mode) -->
+                    <svg x-show="darkMode" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </button>
+
+                <!-- Settings Dropdown -->
+                @auth
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
@@ -87,28 +120,33 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
+                                {{ __('Account Instellingen') }}
+                            </x-dropdown-link>
+                            
+                            <x-dropdown-link :href="route('profiles.show', auth()->user())">
+                                {{ __('Mijn Profiel') }}
+                            </x-dropdown-link>
+                            
+                            <x-dropdown-link :href="route('profiles.edit')">
+                                {{ __('Profiel Bewerken') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                     this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('Uitloggen') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
                     </x-dropdown>
-                </div>
-            @else
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <a href="{{ route('login') }}" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mr-4">Login</a>
-                    <a href="{{ route('register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Register</a>
-                </div>
-            @endauth
+                @else
+                    <a href="{{ route('login') }}" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mr-4">Inloggen</a>
+                    <a href="{{ route('register') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Registreren</a>
+                @endauth
+            </div>
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -128,6 +166,57 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
+            <x-responsive-nav-link :href="route('news.index')" :active="request()->routeIs('news.*')">
+                {{ __('Nieuws') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.*')">
+                {{ __('FAQ') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.*')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <!-- Mobile Dark Mode Toggle -->
+        <div class="pt-2 pb-3 border-t border-gray-200 dark:border-gray-600">
+            <div class="px-4">
+                <button x-data="{ 
+                    darkMode: localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+                    toggle() {
+                        this.darkMode = !this.darkMode;
+                        localStorage.setItem('darkMode', this.darkMode);
+                        if (this.darkMode) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    }
+                }" 
+                x-init="
+                    if (darkMode) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                " 
+                @click="toggle()" 
+                class="flex items-center w-full px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition duration-150 ease-in-out">
+                    <!-- Sun Icon (Light Mode) -->
+                    <svg x-show="!darkMode" class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    
+                    <!-- Moon Icon (Dark Mode) -->
+                    <svg x-show="darkMode" class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    
+                    <span x-text="darkMode ? 'Lichte Modus' : 'Donkere Modus'"></span>
+                </button>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -140,7 +229,15 @@
 
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
+                        {{ __('Account Instellingen') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('profiles.show', auth()->user())">
+                        {{ __('Mijn Profiel') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('profiles.edit')">
+                        {{ __('Profiel Bewerken') }}
                     </x-responsive-nav-link>
 
                     <!-- Authentication -->
@@ -150,7 +247,7 @@
                         <x-responsive-nav-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('Uitloggen') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>
